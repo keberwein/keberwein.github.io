@@ -5,7 +5,7 @@ locale: en_US
 description: Programming for Short Attention Spans.
 logo: site-logo.png
 search: true
-url: https://github.com/keberwein/keberwein.github.io/tree/master
+url: https://raw.githubusercontent.com/keberwein/keberwein.github.io/master
 
 # Jekyll configuration
 
