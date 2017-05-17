@@ -3,7 +3,6 @@ layout: post
 title: "Find Umpire Strike Zones with R and pitchRx"
 categories: saber
 excerpt:
-tags: [pitchRx, umpire, R, strikezone, statistics, ggplot]
 image:
   feature:
 ---
