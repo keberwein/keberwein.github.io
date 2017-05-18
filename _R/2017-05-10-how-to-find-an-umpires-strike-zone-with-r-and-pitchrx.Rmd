@@ -2,10 +2,14 @@
 layout: post
 title: "Find Umpire Strike Zones with R and pitchRx"
 categories: saber
-excerpt:
-image:
-  feature:
 ---
+
+```{r, echo = FALSE, warning = FALSE}
+library(knitr)
+knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
+                      cache.lazy = FALSE, dpi = 180)
+options(width=120, dplyr.width = 150)
+```
 
 Ever wonder how “high” or “low” an umpire’s strikezone is compared to the rest of the leauge? Thanks to some public data and the PitchRx package, it’s easy to use a cluster analysis to figure it out!
 
@@ -15,7 +19,7 @@ For this analysis I’m going to pick on umpire Tim Timmons, for no other reason
 
 Before we get going, let’s load some required packages.
 
-```
+```{r}
 library(dplyr)
 library(ggplot2)
 library(pitchRx)
@@ -25,7 +29,7 @@ The data here are quite large and are collected from my PitchRx database. Refer 
 
 Now that we’ve got all the pitches where Timmons was the home plate ump., the next thing is to parse the data even further to include only pitches that were a called ball or strike.
 
-```
+```{r}
 TimNoswing
 
 AllNoswing
@@ -35,7 +39,7 @@ AllNoswing
 
 Now we get to the fun part! There’s a couple ways to go about this. The simplest way is to go directly to the strikeFX function that’s included in the pitchRx package. To visualize strike zones for Timmons vs. the rest of the league you would do something like this.
 
-```
+```{r}
 strikeFX(TimNoswing, geom="tile", density1=list(des="Called Strike"), density2=list(des="Ball"), 
          layer=facet_grid(.~stand))
 
@@ -43,7 +47,7 @@ strikeFX(TimNoswing, geom="tile", density1=list(des="Called Strike"), density2=l
 
 ...and then
 
-```
+```{r}
 strikeFX(AllNoswing, geom="tile", density1=list(des="Called Strike"), density2=list(des="Ball"), 
          layer=facet_grid(.~stand))
 ```
@@ -77,13 +81,13 @@ It’s been proposed that the ‘mgcv’ package in R provides superior strike z
 
 First, create a binomial model from the ‘TimNoswing’ data frame.
 
-```
+```{r}
 StrikeModel
 ```
 
 Then, use strikeFX to plot the model.
 
-```
+```{r}
 strikeFX(TimNoswing, model=StrikeModel, layer=facet_grid(.~stand))
 
 ```
@@ -94,12 +98,12 @@ strikeFX(TimNoswing, model=StrikeModel, layer=facet_grid(.~stand))
 
 If you’ve used pitchRx to create a database already, a SQL query via your R database package is a good solution because it allows you to pull ONLY the data you need for the analysis. The data I’m using here comes fro the follow query written directly into R via my database connection. I put this at the end of the article simply because SQL code isn’t the most exiting thing in the world but I thought it was important to include.
 
-```
+```{sql}
 #Use SQL to isolate data frame
 data = dbSendQuery(con,
                    "SELECT u.name AS umpName, a.batter_name, a.pitcher_name, a.stand, a.p_throws,
                    a.b AS b, a.s AS s, a.o AS o, a.b_height AS b_height,
-                   p.x AS x, p.y AS y, p.start_speed AS start_speed, p.end_speed AS end_speed, p.sz_top AS sz_top, p.sz_bot AS sz_top, 
+                   p.x AS x, p.y AS y, p.start_speed AS start_speed, p.end_speed AS end_speed, p.sz_top AS sz_top, p.sz_bot                    AS sz_top, 
                    p.pfx_x AS pfx_x, p.pfx_z AS pfx_z, p.px AS px, p.pz AS pz, p.x0 AS x0, p.y0 AS y0, p.z0 AS z0, 
                    p.vx0 AS vx0, p.vy0 AS vy0, p.vz0 AS vz0, p.ax AS ax, p.ay AS ay, p.az AS az,
                    p.break_y AS break_y, p.break_angle AS break_angle, p.break_length AS break_length, 
