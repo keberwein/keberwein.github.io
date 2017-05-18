@@ -1,28 +1,26 @@
 # Site navigation links
 
-- title: About
-  url: /about/
 
-- title: Blog Posts
+
+- title: Search
+  url: /search/
+
+- title: Blog
   url: /blog/
-
-- title: R
-  url: /r/
-
-- title: Saber
-  url: /saber/
 
 - title: R-bloggers
   url: https://www.r-bloggers.com/
 
 - title: RSS
   url: https://keberwein.github.io/feed.xml
-  
+
 - title: GitHub
   url: https://github.com/keberwein
-  
+
 - title: Linkedin
   url: https://www.linkedin.com/in/kris-eberwein-99631b33
- 
-- title: Search
-  url: /search/
+
+- title: About
+  url: /about/
+
+

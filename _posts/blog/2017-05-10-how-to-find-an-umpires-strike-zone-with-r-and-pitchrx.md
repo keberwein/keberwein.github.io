@@ -1,11 +1,10 @@
 ---
 layout: post
 title: "Find Umpire Strike Zones with R and pitchRx"
-categories: saber, r, blog
-excerpt:
-image:
-  feature:
+categories: saber
 ---
+
+
 
 Ever wonder how “high” or “low” an umpire’s strikezone is compared to the rest of the leauge? Thanks to some public data and the PitchRx package, it’s easy to use a cluster analysis to figure it out!
 
@@ -15,38 +14,69 @@ For this analysis I’m going to pick on umpire Tim Timmons, for no other reason
 
 Before we get going, let’s load some required packages.
 
-```
+
+{% highlight r %}
 library(dplyr)
 library(ggplot2)
 library(pitchRx)
 library(mgcv)
-```
+{% endhighlight %}
 The data here are quite large and are collected from my PitchRx database. Refer to the SQL at the end of the article for the data collection method.
 
 Now that we’ve got all the pitches where Timmons was the home plate ump., the next thing is to parse the data even further to include only pitches that were a called ball or strike.
 
-```
-TimNoswing
 
+{% highlight r %}
+TimNoswing
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in eval(expr, envir, enclos): object 'TimNoswing' not found
+{% endhighlight %}
+
+
+
+{% highlight r %}
 AllNoswing
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in eval(expr, envir, enclos): object 'AllNoswing' not found
+{% endhighlight %}
 
 ## Visualizing the Strike Zone
 
 Now we get to the fun part! There’s a couple ways to go about this. The simplest way is to go directly to the strikeFX function that’s included in the pitchRx package. To visualize strike zones for Timmons vs. the rest of the league you would do something like this.
 
-```
+
+{% highlight r %}
 strikeFX(TimNoswing, geom="tile", density1=list(des="Called Strike"), density2=list(des="Ball"), 
          layer=facet_grid(.~stand))
+{% endhighlight %}
 
-```
+
+
+{% highlight text %}
+## Error in match(x, table, nomatch = 0L): object 'TimNoswing' not found
+{% endhighlight %}
 
 ...and then
 
-```
+
+{% highlight r %}
 strikeFX(AllNoswing, geom="tile", density1=list(des="Called Strike"), density2=list(des="Ball"), 
          layer=facet_grid(.~stand))
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in match(x, table, nomatch = 0L): object 'AllNoswing' not found
+{% endhighlight %}
 
 ### Timmons
 
@@ -77,16 +107,29 @@ It’s been proposed that the ‘mgcv’ package in R provides superior strike z
 
 First, create a binomial model from the ‘TimNoswing’ data frame.
 
-```
+
+{% highlight r %}
 StrikeModel
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in eval(expr, envir, enclos): object 'StrikeModel' not found
+{% endhighlight %}
 
 Then, use strikeFX to plot the model.
 
-```
-strikeFX(TimNoswing, model=StrikeModel, layer=facet_grid(.~stand))
 
-```
+{% highlight r %}
+strikeFX(TimNoswing, model=StrikeModel, layer=facet_grid(.~stand))
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in match(x, table, nomatch = 0L): object 'TimNoswing' not found
+{% endhighlight %}
 
 ### Timmons with Model
 
@@ -94,26 +137,4 @@ strikeFX(TimNoswing, model=StrikeModel, layer=facet_grid(.~stand))
 
 If you’ve used pitchRx to create a database already, a SQL query via your R database package is a good solution because it allows you to pull ONLY the data you need for the analysis. The data I’m using here comes fro the follow query written directly into R via my database connection. I put this at the end of the article simply because SQL code isn’t the most exiting thing in the world but I thought it was important to include.
 
-```
-#Use SQL to isolate data frame
-data = dbSendQuery(con,
-                   "SELECT u.name AS umpName, a.batter_name, a.pitcher_name, a.stand, a.p_throws,
-                   a.b AS b, a.s AS s, a.o AS o, a.b_height AS b_height,
-                   p.x AS x, p.y AS y, p.start_speed AS start_speed, p.end_speed AS end_speed, p.sz_top AS sz_top, p.sz_bot AS sz_top, 
-                   p.pfx_x AS pfx_x, p.pfx_z AS pfx_z, p.px AS px, p.pz AS pz, p.x0 AS x0, p.y0 AS y0, p.z0 AS z0, 
-                   p.vx0 AS vx0, p.vy0 AS vy0, p.vz0 AS vz0, p.ax AS ax, p.ay AS ay, p.az AS az,
-                   p.break_y AS break_y, p.break_angle AS break_angle, p.break_length AS break_length, 
-                   p.pitch_type AS pitch_type, p.zone AS zone, p.nasty AS nasty, p.count AS count, p.des AS des,
-                   u.id AS ump_id, a.pitcher AS pitcher_id, a.batter AS batter_id
-                   
-                   FROM atbat a
-                   INNER JOIN umpire u
-                   ON a.gameday_link = u.gameday_link
-                   INNER JOIN pitch p
-                   ON p.gameday_link = a.gameday_link
-                   
-                   WHERE u.position = 'home' AND a.date > '2014_07_01' AND a.date < '2014_09_01'")
 
-#Fetch batting into data frame
-umpZone= fetch(data, n = -1)
-```
