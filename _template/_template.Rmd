@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "title"
-categories: blog
+title: ""
+categories: r
 tags: [r, bls]
 ---
 
