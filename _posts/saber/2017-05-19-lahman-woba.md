@@ -5,11 +5,7 @@ categories: saber
 tags: [sabermetrics, sql]
 ---
 
-```{r, echo = FALSE, warning = FALSE}
-library(knitr)
-knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
-options(width=120, dplyr.width = 150)
-```
+
 
 Weighted On-base Average (wOBA) is one of the stats du jour currently thrown around by baseball fanatics and sabermatricians alike. The formula for wOBA isn't difficult. According to <a href="http://www.fangraphs.com/library/offense/woba/" target="_blank">Fangraphs</a>, the wOBA formula for 2013 was:
 
@@ -31,7 +27,8 @@ Fortunately Fangraphs also provides [this little beauty](http://www.fangraphs.co
 
 Presto! You can now compare wOBA values over several years with a single query. Assuming you named your new table “Guts” your SQL query should look something like this:
 
-```{sql, eval=F}
+
+{% highlight sql %}
 ELECT CONCAT(m.nameFirst, ' ', m.nameLast) AS Name,
 b.playerID, b.yearID, b.AB, b.stint,
 		(g.wBB*(b.BB-b.IBB)+g.wHBP*b.HBP+g.w1B*(b.H-b.2B-b.3B-b.HR)
@@ -46,7 +43,7 @@ ON m.playerID = b.playerID
 WHERE b.yearID >= 2000 AND AB > 300 #The AB>300 gets rid of pitchers
 GROUP BY b.playerID
 ORDER BY wOBA DESC
-```
+{% endhighlight %}
 
 
 ## The Results
