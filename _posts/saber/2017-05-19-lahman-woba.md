@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "HOW to Calculate wOBA in the Lahman Database"
+title: "How to Calculate wOBA in the Lahman Database"
 categories: saber
 tags: [sabermetrics, sql]
 ---
