@@ -5,11 +5,7 @@ categories: r
 tags: [r, shiny]
 ---
 
-```{r, echo = FALSE, warning = FALSE}
-library(knitr)
-knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
-options(width=120, dplyr.width = 150)
-```
+
 
 Shiny Server is a great tool, but I’ve always found it odd that there was no built-in password authentication. Sure, the Shiny Pro edition has SSL auth., but even for open source projects, I’m not really crazy about just anyone hitting my server whenever they want.
 
@@ -18,9 +14,10 @@ To solve this little problem, I whipped up two work-arounds. One solution uses a
 ## Ubuntu vs. CentOS
 From here on out, we’ll be using the same locations and .conf files for both. The one CentOS specific difference is to make sure we disaple SELinux, otherwise our reverse-proxy will go into a bad gateway.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 sed -i /etc/selinux/config -r -e 's/^SELINUX=.*/SELINUX=disabled/g'
-```
+{% endhighlight %}
 
 ## Deploy Shiny Server with Nginx Basic Authorization
 
@@ -28,45 +25,51 @@ The trick is to have Shiny only serve to the localhost and have Nginx listen to 
 
 First, make sure you’ve got Nginx installed.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 sudo apt-get install nginx
 
-```
+{% endhighlight %}
 
 Nginx uses ufw firewall on Ubuntu, so you’ll have to start ufw and enable the correct ports.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 sudo ufw enable
 
 sudo allow 'Nginx Full'
-```
+{% endhighlight %}
 
 Also, make sure you’ve got Apache2-utils, you’ll use this to store the usernames and passwords.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 sudo apt-get install apache2-utils
 
-```
+{% endhighlight %}
 
 Before you go on, shut down both Shiny and Nginx
 
-```{bash, eval=F}
+
+{% highlight bash %}
 sudo systemctl stop nginx
 
 sudo systemctl stop shiny-server
 
-```
+{% endhighlight %}
 
 Next, you’ll need to edit the Nginx default.conf file.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 sudo nano /etc/nginx/sites-available/default
 
-```
+{% endhighlight %}
 
 Copy and paste the following into your default.conf
 
-```{bash, eval=F}
+
+{% highlight bash %}
 server http {
 
   map $http_upgrade $connection_upgrade {
@@ -86,18 +89,20 @@ server http {
       proxy_read_timeout 20d;
     }
   }
-```
+{% endhighlight %}
 
 Once that’s done, you’ll need to edit Shiny Server’s conf file so it only serves to loaclhost. Otherwise users would be able to creep around your authentication by going to port 3838.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 sudo nano /etc/shiny-server/shiny-server.conf
 
-```
+{% endhighlight %}
 
 Copy and paste the below to your shiny-server.conf.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 server{
     listen 3838 127.0.0.1;
     
@@ -108,23 +113,25 @@ server{
     }
 }
 
-```
+{% endhighlight %}
 
 Now it’s time to create some usernames and passwords.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 cd /etc/nginx
 sudo htpasswd -c /etc/nginx/.htpasswd exampleuser
-```
+{% endhighlight %}
 
 Restart Nginx and Shiny.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 sudo systemctl start nginx
 
 sudo systemctl start shiny-server
 
-```
+{% endhighlight %}
 
 Ta-da, now you’ve got a password protected Shiny Server! Note, Shiny is now served by port 80 instead of port 3838!
 
@@ -136,14 +143,16 @@ This is basically the same as above, but we’re going to direct the reverse-pro
 
 First we have to create a self-signed certificate. This is going to live in the nginx folder for ease of use.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 cd /etc/nginx
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/server.key -out /etc/nginx/server.crt
-```
+{% endhighlight %}
 
 Now use the same nginx default.conf method as above but add lines to read the SSL cert.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 # Redirect all traffic from port 80 to SSL port
 server {
     listen 80;
@@ -163,11 +172,12 @@ server {
         auth_basic_user_file /etc/nginx/.htpasswd;
     }
 }
-```
+{% endhighlight %}
 
 The changes to shiny-server.conf are the same as above.
 
-```{bash, eval=F}
+
+{% highlight bash %}
 server{
     listen 3838 127.0.0.1;
     
@@ -177,7 +187,7 @@ server{
     directory_index on;
     }
 }
-```
+{% endhighlight %}
 
 If everything is working correctly, you should be staring at an ugly error message in your browser telling you that this is an “unsafe website.” This is due to the self-signed certificate. Just ignore that, add an exception and you should be confronted with a login box.
 
@@ -187,7 +197,8 @@ This is purely for testing purposes. This hasn’t been fully tested so don’t 
 
 One more thing, the above is a VERY basic Nginx setup, the full-monty for the Nginx conf file would probably look something like this:
 
-```{bash, eval=F}
+
+{% highlight bash %}
 # Redirect all traffic from port 80 to SSL port
 server {
     listen 80;
@@ -215,5 +226,5 @@ server {
         auth_basic_user_file /etc/nginx/.htpasswd;
     }
 }
-```
+{% endhighlight %}
 

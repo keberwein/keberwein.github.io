@@ -1,5 +1,6 @@
 library(krisUtils)
+library(knitr)
 
 setwd("~/Documents/keberwein.github.io/_Rmd")
 
-krisUtils::KnitPost(fileName="2017-05-19-postgres_plr.Rmd", category="r", fig=F)
+krisUtils::KnitPost(fileName="2017-05-22-shiny.nginx.Rmd", category="r", fig=F)
