@@ -2,7 +2,6 @@
 layout: post
 title: "Upgrade R Without Losing Your Packages"
 image:
-  feature: rterminal1.png
   thumb: rterminal1.png #keep it square 200x200 px is good
 categories: r
 tags: [r]
