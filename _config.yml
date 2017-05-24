@@ -39,7 +39,7 @@ exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.
 owner:
   name: Kris Eberwein
   avatar: bio-photo.jpg
-  disqus-shortname: @kriseberwein
+  disqus-shortname: datascienceriot
   twitter: KrisEberwein
   facebook: #username
   github: keberwein
