@@ -1,0 +1,14 @@
+---
+layout: post
+title: "How to Install R Ubuntu 16.04 Xenial"
+categories: r
+tags: [r]
+---
+
+```{r, echo = FALSE, warning = FALSE}
+library(knitr)
+knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
+options(width=120, dplyr.width = 150)
+```
+
+![](footer_image_url)
