@@ -1,8 +1,6 @@
 ---
 layout: post
 title: "Upgrade R Without Losing Your Packages"
-image:
-  thumb: rterminal1.png #keep it square 200x200 px is good
 categories: r
 tags: [r]
 ---
@@ -47,3 +45,4 @@ for (i in 1:length(missing)) biocLite(missing[i])
 
 All done, now you can get back to cracking out R code. This method helped me save a lot of time, hope someone else finds it useful!
 
+![](https://github.com/keberwein/keberwein.github.io/blob/master/images/rterminal1.png?raw=true)
