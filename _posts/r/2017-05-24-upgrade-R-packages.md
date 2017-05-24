@@ -2,8 +2,8 @@
 layout: post
 title: "Upgrade R Without Losing Your Packages"
 image:
-  feature: https://github.com/keberwein/keberwein.github.io/blob/master/images/rterminal1.png?raw=true
-  thumb: https://github.com/keberwein/keberwein.github.io/blob/master/images/rterminal1.png?raw=true #keep it square 200x200 px is good
+  feature: https://raw.githubusercontent.com/keberwein/keberwein.github.io/master/images/rterminal1.png
+  thumb: https://raw.githubusercontent.com/keberwein/keberwein.github.io/master/images/rterminal1.png #keep it square 200x200 px is good
 categories: r
 tags: [r]
 ---
