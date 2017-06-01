@@ -6,11 +6,6 @@ tags: [r, bls]
 ---
 
 
-{% highlight r %}
-library(knitr)
-knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
-options(width=120, dplyr.width = 150)
-{% endhighlight %}
 
 The [blscrapeR package](https://github.com/keberwein/blscrapeR) makes it easy to produce choropleth maps of various employment and unemployment rates from the Bureau of Labor Statistics (BLS.) It’s easy enough to pull a metric for a certain county. The code below pulls the unemployment rates for Orange County, FL from the BLS API.
 

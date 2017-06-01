@@ -5,7 +5,7 @@ categories: r
 tags: [r, bls]
 ---
 
-```{r, echo = TRUE, warning = FALSE}
+```{r, echo = FALSE, warning = FALSE}
 library(knitr)
 knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
 options(width=120, dplyr.width = 150)

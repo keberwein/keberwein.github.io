@@ -6,11 +6,6 @@ tags: [r, bls]
 ---
 
 
-{% highlight r %}
-library(knitr)
-knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
-options(width=120, dplyr.width = 150)
-{% endhighlight %}
 
 The most difficult thing about working with BLS data is gaining a clear understanding on what data are available and what they represent. Some of the more popular data sets can be found on the BLS Databases, [Tables & Calculations](https://www.bls.gov/data/) website. The selected examples below do not include all series or databases.
 
@@ -48,7 +43,7 @@ ggplot(data = df, aes(x = date)) +
     theme(legend.position="top", plot.title = element_text(hjust = 0.5)) 
 {% endhighlight %}
 
-![plot of chunk unnamed-chunk-11](/assets/Rfig/unnamed-chunk-11-1.svg)
+![plot of chunk unnamed-chunk-3](/assets/Rfig/unnamed-chunk-3-1.svg)
 
 ## Occupational Employment Statistics (OES)
 
