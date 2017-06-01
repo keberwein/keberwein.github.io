@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ""
+title: "Mapping County Unemployment with blscrapeR"
 categories: r
 tags: [r, bls]
 ---
