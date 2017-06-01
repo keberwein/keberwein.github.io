@@ -1,0 +1,16 @@
+---
+layout: post
+title: "Calculate Wages and Benefits with blscrapeR"
+categories: r
+tags: [r, bls]
+---
+
+```{r, echo = FALSE, warning = FALSE}
+library(knitr)
+knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
+options(width=120, dplyr.width = 150)
+```
+
+The most difficult thing about working with BLS data is gaining a clear understanding on what data are available and what they represent. Some of the more popular data sets can be found on the BLS Databases, Tables & Calculations website. The selected examples below do not include all series or databases.
+
+![](footer_image_url)
