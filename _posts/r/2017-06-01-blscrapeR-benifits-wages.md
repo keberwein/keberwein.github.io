@@ -5,11 +5,12 @@ categories: r
 tags: [r, bls]
 ---
 
-```{r, echo = TRUE, warning = FALSE}
+
+{% highlight r %}
 library(knitr)
 knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
 options(width=120, dplyr.width = 150)
-```
+{% endhighlight %}
 
 The most difficult thing about working with BLS data is gaining a clear understanding on what data are available and what they represent. Some of the more popular data sets can be found on the BLS Databases, [Tables & Calculations](https://www.bls.gov/data/) website. The selected examples below do not include all series or databases.
 
@@ -17,10 +18,10 @@ The most difficult thing about working with BLS data is gaining a clear understa
 
 The first step in analyzing any of these data in R is to install the blscrapeR package from CRAN.
 
-```{r, eval=F}
-install.packages('blscrapeR')
 
-```
+{% highlight r %}
+install.packages('blscrapeR')
+{% endhighlight %}
 
 ## Current Population Survey (CPS)
 
@@ -28,7 +29,8 @@ The CPS includes median weekly earnings by occupation, among other things.
 
 For example, we can use blscrapeR to pull data from the API for the median weekly earnings for Database Administrators and Software Developers.
 
-```{r}
+
+{% highlight r %}
 library(blscrapeR)
 library(tidyr)
 # Median Usual Weekly Earnings by Occupation, Unadjusted Second Quartile.
@@ -44,7 +46,9 @@ ggplot(data = df, aes(x = date)) +
     geom_line(aes(y = LEU0254530600, color = "Software Devs.")) + 
     labs(title = "Median Weekly Earnings by Occupation") + ylab("value") +
     theme(legend.position="top", plot.title = element_text(hjust = 0.5)) 
-```
+{% endhighlight %}
+
+![plot of chunk unnamed-chunk-11](/assets/Rfig/unnamed-chunk-11-1.svg)
 
 ## Occupational Employment Statistics (OES)
 
@@ -52,7 +56,8 @@ The OES contains similar wage data found in the CPS, but often has more resoluti
 
 For example, we may want to compare the average hourly wage of Computer and Information Systems Managers in Orlando, FL to those in San Jose, CA. Notice, below the survey only returns values for 2015.
 
-```{r}
+
+{% highlight r %}
 # Computer and Information Systems Managers in Orlando, FL and San Jose, CA.
 # Orlando: "OEUM003674000000011302103"
 # San Jose: "OEUM004194000000011302108"
@@ -60,16 +65,32 @@ library(blscrapeR)
 df <- bls_api(c("OEUM003674000000011302103", "OEUM004194000000011302108"))
 
 head(df)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   year period periodName value footnotes                  seriesID
+## 1 2016    A01     Annual 67.84           OEUM003674000000011302103
+## 2 2016    A01     Annual 87.53           OEUM004194000000011302108
+{% endhighlight %}
 
 Another OES example would be to grab the most recent Annual mean wage for All Occupations in All Industries in the United States.
 
-```{r}
+
+{% highlight r %}
 library(blscrapeR)
 df <- bls_api("OEUN000000000000000000004")
 
 head(df)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   year period periodName value footnotes                  seriesID
+## 1 2016    A01     Annual 49630           OEUN000000000000000000004
+{% endhighlight %}
 
 ## Employer Cost for Employee Compensation
 
@@ -77,7 +98,8 @@ This data set includes time series data on how much employers pay for employee b
 
 For example, if we want to see the total cost of benefits per hour work and also see what percentage that is of the total compensation, we could run the following script.
 
-```{r}
+
+{% highlight r %}
 library(blscrapeR)
 library(dplyr)
 library(tidyr)
@@ -91,13 +113,26 @@ df.sp <- spread(df, seriesID, value) %>%
 df.sp$pct_of_wages <- df.sp$pct_of_wages*0.01
 
 head(df.sp)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   year period  periodName footnotes hourly_cost pct_of_wages
+## 1 2014    Q04 4th Quarter                 10.49        0.316
+## 2 2014    Q03 3rd Quarter                 10.07        0.313
+## 3 2014    Q02 2nd Quarter                 10.00        0.313
+## 4 2014    Q01 1st Quarter                  9.97        0.312
+## 5 2015    Q04 4th Quarter                 10.52        0.313
+## 6 2015    Q03 3rd Quarter                 10.48        0.314
+{% endhighlight %}
 
 ## National Compensation Survey-Benefits
 
 This survey includes data on how many Americans have access to certain benefits. For example, we can see the percentage of those who have access to paid vacation days and those who have access to Health insurance through their employers.
 
-```{r}
+
+{% highlight r %}
 library(blscrapeR)
 library(dplyr)
 library(tidyr)
@@ -112,6 +147,15 @@ df.sp$pct_paid_vacation <- df.sp$pct_paid_vacation*0.01
 df.sp$pct_health_ins <- df.sp$pct_health_ins*0.01
 
 head(df.sp)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   year period periodName footnotes pct_health_ins pct_paid_vacation
+## 1 2014    A01     Annual                     0.72              0.74
+## 2 2015    A01     Annual                     0.72              0.74
+## 3 2016    A01     Annual                     0.70              0.73
+{% endhighlight %}
 
 If you want more mapping options, there is more information in the `blscrapeR` [package vignettes](https://github.com/keberwein/blscrapeR/tree/master/vignettes).

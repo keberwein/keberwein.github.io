@@ -1,7 +1,6 @@
 base
-krisUtils
 knitr
 blscrapeR
-ggplot2
 tidyr
+ggplot2
 dplyr
