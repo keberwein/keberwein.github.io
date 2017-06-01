@@ -5,21 +5,18 @@ categories: r
 tags: [r, bls]
 ---
 
-```{r, echo = FALSE, warning = FALSE}
-library(knitr)
-knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
-options(width=120, dplyr.width = 150)
-```
+
 
 The [blscrapeR package](https://github.com/keberwein/blscrapeR) makes it easy to produce choropleth maps of various employment and unemployment rates from the Bureau of Labor Statistics (BLS.) It’s easy enough to pull a metric for a certain county. The code below pulls the unemployment rates for Orange County, FL from the BLS API.
 
-```{r, eval=F}
+
+{% highlight r %}
 library(blscrapeR)
 df <- bls_api("LAUCN120950000000003",
               startyear = 2016, endyear = 2016)
 
 head(df)
-```
+{% endhighlight %}
 
 
 The only problem is, there are over 3,000 counties in the United States and an API query of that size would push any user well over the daily query limits of the BLS API.
@@ -28,12 +25,13 @@ To resolve the issue, the `blscrapeR` package includes a function that allows us
 
 **NOTE:** You can use arguments to get data for a specific month, but if there is no date argument, the function will pull the most recent month in the data set.
 
-```{r, eval=FALSE}
+
+{% highlight r %}
 library(blscrapeR)
 df <- get_bls_county()
 
 head(df)
-```
+{% endhighlight %}
 
 **Limitations:** The `get_bls_county()` function is only able to pull labor data for the past 12 months at time of query.
 
@@ -42,24 +40,26 @@ head(df)
 
 Now that we’ve got the data, it’s time for the mapping. There are a few options here, but the simplest option would be to use the package’s  `bls_map_county()` function.
 
-```{r, eval=F}
+
+{% highlight r %}
 library(blscrapeR)
 bls_map_county(map_data = df, fill_rate = "unemployed_rate", 
                labtitle = "Unemployment Rate by County")
-```
+{% endhighlight %}
 
 ![](https://github.com/keberwein/keberwein.github.io/blob/master/images/blscrape_county_unemp.png?raw=true)
 
 Maybe you just want one state? That's alright too.
 
-```{r, eval=F}
+
+{% highlight r %}
 library(blscrapeR)
 # Map the unemployment rate for the Southeastern United States.
 df <- get_bls_county(stateName = "Florida")
 
 bls_map_county(map_data=df, fill_rate = "unemployed_rate", 
                stateName = "Florida")
-```
+{% endhighlight %}
 
 ![](https://github.com/keberwein/keberwein.github.io/blob/master/images/bus_fl_map.png?raw=true)
 
@@ -69,18 +69,32 @@ The `bls_map_county()` function produces a map that may not be your cup of tea. 
 
 First, call the internal map data set and have a look:
 
-```{r}
+
+{% highlight r %}
 library(blscrapeR)
 us_map <- county_map_data
 
 head(us_map)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##      long      lat order  hole piece   group    id
+## 1 1225889 -1275020     1 FALSE     1 01001.1 01001
+## 2 1244873 -1272331     2 FALSE     1 01001.1 01001
+## 3 1244129 -1267515     3 FALSE     1 01001.1 01001
+## 4 1272010 -1262889     4 FALSE     1 01001.1 01001
+## 5 1276797 -1295514     5 FALSE     1 01001.1 01001
+## 6 1272367 -1296730     6 FALSE     1 01001.1 01001
+{% endhighlight %}
 
 Notice the id column looks a lot like one of the FIPS codes returned by the get_bls_county() function? This is actually a concatenation of the state + county FIPS codes. The first two numbers are the state FIPS and the last four are the county FIPS. These boundaries currently represent 20015/2016 and will be updated accordingly so they always represent the current year.
 
 Next, produce your custom map.
 
-```{r, eval=F}
+
+{% highlight r %}
 library(blscrapeR)
 library(ggplot2)
 # Get the most recent unemployment rate for each county on a national level.
@@ -110,7 +124,7 @@ ggplot() +
           panel.border = element_blank(),
           panel.background = element_blank(),
           legend.title=element_blank())
-```
+{% endhighlight %}
 
 ![](https://github.com/keberwein/keberwein.github.io/blob/master/images/bls_custom_map.png?raw=true)
 
