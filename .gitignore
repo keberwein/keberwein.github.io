@@ -9,3 +9,5 @@ node_modules
 .Rproj.user
 
 .Rhistory
+
+.RData
