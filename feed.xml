@@ -4,7 +4,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Data Science Riot!</title>
-		<description>Posts categorized as 'R'</description>
+		<description>Data Science Riot!</description>
 		<link>{{ site.url }}</link>
 		<atom:link href="{{ site.url }}/{{ page.path }}" rel="self" type="application/rss+xml" />
 		{% for post in site.categories.r limit:10 %}
