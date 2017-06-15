@@ -11,7 +11,7 @@ My original motivation to write the `baseballDBR` package for R was to provide a
 
 The answer was an "open-data" format that is maintained by the Chadwick Bureau's [Baseball Databank](https://github.com/chadwickbureau/baseballdatabank), which is based on Sean Lahman's database, version 2015-01-24, but has additinal tables aggregated from [Retrosheet](https://github.com/chadwickbureau/baseballdatabank) data.
 
-For further details, see the GitHub page for the `baseballDBR` package. In the meantime, we'll spin through a few lines of code that will quickly get us up and running.
+For further details, see the [GitHub page](https://github.com/keberwein/baseballDBR) for the `baseballDBR` package. In the meantime, we'll spin through a few lines of code that will quickly get us up and running.
 
 
 {% highlight r %}
