@@ -5,11 +5,7 @@ categories: r
 tags: [r, saber]
 ---
 
-```{r, echo = FALSE, warning = FALSE}
-library(knitr)
-knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
-options(width=120, dplyr.width = 150)
-```
+
 
 My original motivation to write the `baseballDBR` package for R was to provide a quick and easy way to have access to Sean Lahman's Baseball Database. The `Lahman` package has been around for several years, and is a great resource, however it lacks consistant updates. Also, the CRAN repository has limits on how large data packages can be, and the `Lahman` package is currently pushing that limit.
 
@@ -17,15 +13,17 @@ The answer was an "open-data" format that is maintained by the Chadwick Bureau's
 
 For further details, see the GitHub page for the `baseballDBR` package. In the meantime, we'll spin through a few lines of code that will quickly get us up and running.
 
-```{r, eval=F}
+
+{% highlight r %}
 # Install the package from CRAN
 install.packages(baseballDBR)
-```
+{% endhighlight %}
 
 
 The following is based on the assumption we have an empty Postgres database called "lahman." If you prefer another database, the following method should also work with MySQL and the `RMySQL` package.
 
-```{r, eval=F}
+
+{% highlight r %}
 library(baseballDBR)
 library(RPostgreSQL)
 
@@ -46,7 +44,7 @@ for (i in 1:length(dbTables)) {
 # Disconnect from database.
 dbDisconnect(con)
 rm(con, drv)
-```
+{% endhighlight %}
 
 
 ![](https://github.com/keberwein/keberwein.github.io/blob/master/images/baseballDBR_hex.png?raw=true)
