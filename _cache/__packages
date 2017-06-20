@@ -5,3 +5,5 @@ blscrapeR
 ggplot2
 tidyr
 dplyr
+baseballDBR
+bindrcpp
