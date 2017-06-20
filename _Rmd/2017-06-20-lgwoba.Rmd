@@ -1,0 +1,67 @@
+---
+layout: post
+title: "American vs. National League wOBA Vales."
+categories: r
+tags: [r]
+---
+
+```{r, echo = FALSE, warning = FALSE}
+library(knitr)
+knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
+options(width=120, dplyr.width = 150)
+```
+
+Traditionally, statistics like wOBA (weighted on-base average) have been calculated using league averages. While building the `baseballDBR` package, I thought it would be interesting to group the American and National when making wOBA calculations. In theory, there should be parity across the two leagues, but that is not always the case.
+
+In order to calculate wOBA values for each league, the `baseballDBR` package uses a ported version of Tom Tango's [SQL incantation](http://www.insidethebook.com/ee/index.php/site/article/woba_year_by_year_calculations/) to calculate wOBA using the Baseball Databank. While Tango admits, this calculation is not perfect, it normally has a plus/minus of less than one one-thousandth of a percent compared to [Fangraphs' values](http://www.fangraphs.com/guts.aspx?type=cn).
+
+## Gathering wOBA Modifiers by League
+
+```{r, eval=F}
+install.packages("baseballDBR")
+```
+
+
+```{r}
+library(baseballDBR)
+# Load data from Baseball Databank
+get_bbdb(table = c("Batting", "Pitching", "Fielding"))
+
+# Run wOBA values for seperate leagues.
+# Subset for 1900, when the AL was created. Exclude the Federal League.
+w_vals <- wOBA_values(BattingTable = Batting, FieldingTable = Fielding, PitchingTable = Pitching, Sep.Leagues = TRUE) %>%
+    subset(yearID >= 1900 & lgID != "FL", select = c("yearID", "lgID", "lg_woba"))
+head(w_vals)
+```
+
+## Plot Leauge wOBA Vales by Year
+
+```{r}
+library(ggplot2)
+ggplot(w_vals, aes(x=yearID, y=lg_woba, color=lgID)) + geom_point(shape=1) +
+    scale_colour_hue(l=50) + geom_smooth() 
+```
+
+The plot shows the modern parity we expected. It also shows the affects of the "dead ball era" prior to 1920. However, what is interesting is the increase in `league wOBA` between 1920 and 1930 in the American League It should be mentioned, the stat "league wOBA" here is the average OBP, or on-base percentage for each league.
+
+## Using OBP to Find Outliers
+
+There were obviously players in the American League between 1920 and 1930 that were blowing the curve, performing well above average. We can drill down deeper to find out exactly who those players were. Note, since the `league wOBA` represents a league average `OBP`, we will use OBP instead of wOBA to find our outliers.
+
+```{r}
+# Set NA to zero because sacrifice fly was not a tracked stat prior to 1954, but were still counted as at-bats and in the OBP calculation.
+Batting$SF[is.na(Batting$SF)] <- 0
+
+# Add OBP to data frame.
+Batting$OBP <- OBP(Batting)
+
+# Find the outliers. Subset for more than 200 at-bats to exclude part-time players.
+al_outliers <- subset(Batting, OBP >= .5 & lgID == "AL" & yearID >= 1920 & yearID <= 1930 & AB >= 200)
+al_outliers
+```
+
+There you have it, George Herman Ruth, blowing the curve once again!
+
+
+
+![](https://github.com/keberwein/keberwein.github.io/blob/master/images/baseballDBR_hex.png?raw=true)
