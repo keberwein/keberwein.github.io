@@ -6,11 +6,8 @@
 - title: Search
   url: /search/
 
-- title: R Scripts
+- title: Blog Posts
   url: /r/
-
-- title: Sabermetrics
-  url: /saber/
 
 - title: R-bloggers
   url: https://www.r-bloggers.com/
