@@ -2,7 +2,7 @@
 layout: post
 title: "Creating a Baseball Database with baseballDBR"
 categories: r
-tags: [r, sabermetrics]
+tags: [saber, sabermetrics]
 ---
 
 
