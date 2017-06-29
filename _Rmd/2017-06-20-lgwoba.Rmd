@@ -42,11 +42,11 @@ ggplot(w_vals, aes(x=yearID, y=lg_woba, color=lgID)) + geom_point(shape=1) +
     scale_colour_hue(l=50) + geom_smooth() 
 ```
 
-The plot shows the modern parity we expected. It also shows the affects of the "dead ball era" prior to 1920. However, what is interesting is the increase in `league wOBA` between 1920 and 1930 in the American League It should be mentioned, the stat "league wOBA" here is the average OBP, or on-base percentage for each league.
+The plot shows the modern parity we expected. It also shows the effects of the “dead ball era” prior to 1920. However, what is interesting is the increase in. `league wOBA` between 1920 and 1930 in the American League. It should be mentioned, the stat “league wOBA” is the average on-base percentage (OBP) for each league.
 
 ## Using OBP to Find Outliers
 
-There were obviously players in the American League between 1920 and 1930 that were blowing the curve, performing well above average. We can drill down deeper to find out exactly who those players were. Note, since the `league wOBA` represents a league average `OBP`, we will use OBP instead of wOBA to find our outliers.
+There were obviously players in the American League between 1920 and 1930 that were blowing the curve, performing above average. We can drill down deeper to find out exactly who those players were. Note, since the `league wOBA` represents a league average `OBP`, we will use OBP instead of wOBA to find our outliers.
 
 ```{r}
 # Set NA to zero because sacrifice fly was not a tracked stat prior to 1954, but were still counted as at-bats and in the OBP calculation.
