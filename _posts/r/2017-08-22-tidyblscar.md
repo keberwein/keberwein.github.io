@@ -85,7 +85,7 @@ ggplot(data = tbl, aes(x = date)) +
     theme(legend.position="top", plot.title = element_text(hjust = 0.5)) 
 {% endhighlight %}
 
-![plot of chunk unnamed-chunk-4](/assets/Rfig/unnamed-chunk-4-1.svg)
+![plot of chunk unnamed-chunk-4](/assets/Rfig/unnamed-chunk-4-1.png)
 
 For more information and examples, please see the [package vignettes](https://github.com/keberwein/blscrapeR/tree/master/vignettes).
 
