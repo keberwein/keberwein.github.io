@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Tidy-er BLS data with the blscarpeR package"
+title: "Tidyer BLS data with the blscarpeR package"
 categories: r
 tags: [r]
 ---
