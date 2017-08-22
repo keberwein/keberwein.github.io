@@ -7,3 +7,7 @@ tidyr
 dplyr
 baseballDBR
 bindrcpp
+tidyverse
+tibble
+readr
+purrr
