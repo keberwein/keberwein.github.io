@@ -71,7 +71,7 @@ The main attraction of the BLS are the monthly employment and unemployment data.
 {% highlight r %}
 library(blscrapeR)
 library(tidyverse)
-tbl <- bls_api(c("LNS14000000", "LNS13327708", "LNS13327709"), registrationKey = "BLS_KEY") %>%
+tbl <- bls_api(c("LNS14000000", "LNS13327708", "LNS13327709")) %>%
     spread(seriesID, value) %>%
     dateCast() %>%
     rename(u3_unemployment = LNS14000000, u5_unemployment = LNS13327708, u6_unemployment = LNS13327709)
