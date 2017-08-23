@@ -5,11 +5,7 @@ categories: r
 tags: [r]
 ---
 
-```{r, echo = FALSE, warning = FALSE}
-library(knitr)
-knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
-options(width=120, dplyr.width = 150)
-```
+
 
 The recent release of the [blscrapeR](https://github.com/keberwein/blscrapeR) package brings the "tidyverse" into the fold. Inspired by my recent collaboration with Kyle Walker on his excellent [tidycensus](https://github.com/walkerke/tidycensus) package, blscrapeR has been optimized for use within the tidyverse as of the current version 3.0.0.
 
@@ -28,9 +24,10 @@ The recent release of the [blscrapeR](https://github.com/keberwein/blscrapeR) pa
 
 * Standard apply functions replaced with purrr `map()` functions where performance could be increased.
 
-```{r, eval=FALSE}
+
+{% highlight r %}
 install.packages("blscrapeR")
-```
+{% endhighlight %}
 
 ## The BLS: More than Unemployment
 
@@ -38,7 +35,8 @@ The American Time Use Survey is one of the BLS' more interesting data sets. Belo
 
 It should be noted, some familiarity with BLS series id numbers is required here. The [BLS Data Finder](https://beta.bls.gov/dataQuery/search) is a nice tool to find series id numbers.
 
-```{r}
+
+{% highlight r %}
 library(blscrapeR)
 library(tidyverse)
 tbl <- bls_api(c("TUU10101AA01014236", "TUU10101AA01013951")) %>%
@@ -46,8 +44,18 @@ tbl <- bls_api(c("TUU10101AA01014236", "TUU10101AA01013951")) %>%
     dateCast() %>%
     rename(watching_tv = TUU10101AA01014236, socializing_communicating = TUU10101AA01013951)
 tbl
+{% endhighlight %}
 
-```
+
+
+{% highlight text %}
+## # A tibble: 3 x 7
+##    year    period periodName footnotes socializing_communicating watching_tv       date
+## * <dbl>    <list>     <list>    <list>                     <dbl>       <dbl>     <date>
+## 1  2014 <chr [1]>  <chr [1]> <chr [1]>                      0.71        2.82 2014-01-01
+## 2  2015 <chr [1]>  <chr [1]> <chr [1]>                      0.68        2.78 2015-01-01
+## 3  2016 <chr [1]>  <chr [1]> <chr [1]>                      0.65        2.73 2016-01-01
+{% endhighlight %}
 
 ## Unemployment Rates
 
@@ -59,7 +67,8 @@ The main attraction of the BLS are the monthly employment and unemployment data.
 
 * U-6: Total unemployed, plus all marginally attached workers, plus total employed part time for economic reasons, as a percent of the civilian labor force plus all marginally attached workers.
 
-```{r u3plot}
+
+{% highlight r %}
 library(blscrapeR)
 library(tidyverse)
 tbl <- bls_api(c("LNS14000000", "LNS13327708", "LNS13327709"), registrationKey = "BLS_KEY") %>%
@@ -74,7 +83,9 @@ ggplot(data = tbl, aes(x = date)) +
     geom_line(aes(y = u6_unemployment, color = "U-6 Unemployment")) + 
     labs(title = "Monthly Unemployment Rates") + ylab("value") +
     theme(legend.position="top", plot.title = element_text(hjust = 0.5)) 
-```
+{% endhighlight %}
+
+![plot of chunk u3plot](/assets/Rfig/u3plot-1.svg)
 
 For more information and examples, please see the [package vignettes](https://github.com/keberwein/blscrapeR/tree/master/vignettes).
 
