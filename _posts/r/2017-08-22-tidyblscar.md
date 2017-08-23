@@ -85,7 +85,7 @@ ggplot(data = tbl, aes(x = date)) +
     theme(legend.position="top", plot.title = element_text(hjust = 0.5)) 
 {% endhighlight %}
 
-![plot of chunk u3plot](/assets/Rfig/u3plot-1.svg)
+![](/assets/Rfig/unnamed-chunk-4-1.png)
 
 For more information and examples, please see the [package vignettes](https://github.com/keberwein/blscrapeR/tree/master/vignettes).
 
