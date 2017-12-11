@@ -1,0 +1,20 @@
+---
+layout: post
+title: "Parallel Processing Baseball Data with R and mlbgameday"
+categories: r
+tags: [r, baseball, mlbgameday]
+---
+
+```{r, echo = FALSE, warning = FALSE}
+library(knitr)
+knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
+options(width=120, dplyr.width = 150)
+```
+
+Designed to facilitate extract, transform and load for MLBAM “Gameday” data. The package is optimized for parallel processing of data that may be larger than memory. There are other packages in the R universe that were built to perform statistics and visualizations on these data, but mlbgameday is concerned primarily with data collection. More uses of these data can be found in the pitchRx, openWAR, and baseballr packages.
+
+## Install from CRAN
+
+`install.packages("mlbgameday")`
+
+![](https://raw.githubusercontent.com/keberwein/mlbgameday/master/man/figures/mlbgameday_hex.png)
