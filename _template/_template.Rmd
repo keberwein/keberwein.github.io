@@ -2,7 +2,7 @@
 layout: post
 title: ""
 categories: r
-tags: [r, bls]
+tags: [r]
 ---
 
 ```{r, echo = FALSE, warning = FALSE}
