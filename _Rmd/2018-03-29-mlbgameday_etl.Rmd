@@ -1,0 +1,70 @@
+---
+layout: post
+title: "Automated Data Collection with R and mlbgameday"
+categories: r
+tags: [r, baseball, mlbgameday]
+---
+
+```{r, echo = FALSE, warning = FALSE}
+library(knitr)
+knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
+options(width=120, dplyr.width = 150)
+```
+
+
+## Just In Time For Baseball
+
+The `mlbgameday` package has just reached the milestone of version 0.1.0.
+
+Designed to facilitate extract, transform and load for MLBAM “Gameday” data. The package is optimized for parallel processing of data that may be larger than memory. There are other packages in the R universe that were built to perform statistics and visualizations on these data, but [mlbgameday](https://github.com/keberwein/mlbgameday) is concerned primarily with data collection. More uses of these data can be found in the [pitchRx](https://github.com/cpsievert/pitchRx), [openWAR](https://github.com/beanumber/openWAR), and [baseballr](https://github.com/BillPetti/baseballr) packages.
+
+## Install from CRAN
+
+`install.packages("mlbgameday")`
+
+## Quick Start
+
+```{r}
+library(mlbgameday)
+library(RSQLite)
+
+# Log into your database and retreive the most recent date.
+con <- dbConnect(RSQLite::SQLite(), dbname = "mlbgameday.sqlite3")
+
+db_end <- dbGetQuery(con, "SELECT MAX(date) FROM atbat")
+
+# Use the max date +1 as the start date and today -1 for the end date for your new payload.
+get_payload(start = bd_end, end = Sys.Date() - 1, db_con = con)
+```
+
+## Creating a Database
+
+```{r}
+library(mlbgameday)
+library(RSQLite)
+library(doParallel)
+
+# Create an empty database instance.
+con <- dbConnect(RSQLite::SQLite(), dbname = "mlbgameday.sqlite3")
+
+# Optional: Use parallel processing to populate the database with Spring Training Games.
+
+# Set the number of cores to use as the machine's maximum number of cores minus 1 for background processes.
+no_cores <- detectCores() - 2
+cl <- makeCluster(no_cores)  
+registerDoParallel(cl)
+
+get_payload(start = "2018-01-01", end = "2018-03-28", db_con = con)
+
+# Stop and remove cluster.
+stopImplicitCluster()
+rm(cl)
+```
+
+## Task Scheduling
+
+Linux or OSx
+
+Windows
+
+![](https://raw.githubusercontent.com/keberwein/mlbgameday/master/man/figures/mlbgameday_hex.png)
