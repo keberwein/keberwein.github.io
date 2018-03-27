@@ -13,32 +13,13 @@ options(width=120, dplyr.width = 150)
 
 ## Opening Day Is On The Way
 
-Time to set up a presistent database to collect every pich thrown in this year's baseball season.
+Time to set up a persistent database to collect every pitch thrown in this year's baseball season.
 
 The `mlbgameday` package is designed to facilitate extract, transform and load for MLBAM “Gameday” data. The package is optimized for parallel processing of data that may be larger than memory.
 
 ## Install from CRAN
 
 `install.packages("mlbgameday")`
-
-## Quick Start
-
-If you already have a database in-place, you can get started quickly. The `mlbgameday` package will work if your current database was gathered using the `pitchRx` package.
-
-```{r}
-library(mlbgameday)
-library(RSQLite)
-
-# Log into your database and retreive the most recent date.
-con <- dbConnect(RSQLite::SQLite(), dbname = "mlbgameday.sqlite3")
-
-db_end <- dbGetQuery(con, "SELECT MAX(date) FROM atbat")
-
-# Use the max date +1 as the start date and today -1 for the end date for your new payload.
-get_payload(start = bd_end, end = Sys.Date() - 1, db_con = con)
-```
-
-## Extract Transform Load of MLB Advanced Media Data
 
 ## Creating a Database
 
@@ -64,10 +45,29 @@ stopImplicitCluster()
 rm(cl)
 ```
 
+## Extract Transform Load of MLB Advanced Media Data
+
+Once you have a database in-place, you can get started quickly. The `mlbgameday` package will work if your current database was gathered using the `pitchRx` package.
+
+```{r}
+library(mlbgameday)
+library(RSQLite)
+
+# Log into your database and retreive the most recent date.
+con <- dbConnect(RSQLite::SQLite(), dbname = "mlbgameday.sqlite3")
+
+db_end <- dbGetQuery(con, "SELECT MAX(date) FROM atbat")
+
+# Use the max date +1 as the start date and today -1 for the end date for your new payload.
+get_payload(start = bd_end, end = Sys.Date() - 1, db_con = con)
+```
+
 ## Task Scheduling
 
-Linux or OSx
+I prefer to pull the day's data early in the morning (for the day before.) What ever time you choose, you want to consider time zones and allow enough additional time to cover rain delays for late games, as not to miss any information. There are various task scheduling tools, depending on your operating system.
 
-Windows
+* Linux or OSx: Cron is pretty much the universal standard. Cron is command line driven, but GUI interfaces exist for both operating systems.
+
+* Windows: Several options, but the built-in task scheduler is probably the best.
 
 ![](https://raw.githubusercontent.com/keberwein/mlbgameday/master/man/figures/mlbgameday_hex.png)
