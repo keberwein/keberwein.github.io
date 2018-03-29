@@ -17,3 +17,4 @@ mlbgameday
 foreach
 iterators
 doParallel
+RSQLite
