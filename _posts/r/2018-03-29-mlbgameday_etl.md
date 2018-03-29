@@ -7,9 +7,7 @@ tags: [r, baseball, mlbgameday]
 
 
 
-## Opening Day Is On The Way
-
-Time to set up a persistent database to collect every pitch thrown in this year's baseball season.
+Opening day is on the way Time to set up a persistent database to collect every pitch thrown in this year's baseball season.
 
 The `mlbgameday` package is designed to facilitate extract, transform and load for MLBAM “Gameday” data. The package is optimized for parallel processing of data that may be larger than memory. Learn more about the project [here](https://github.com/keberwein/mlbgameday).
 
