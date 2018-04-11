@@ -50,6 +50,28 @@ plot_ly(pitches, x = ~px, y = ~pz, mode = 'markers',
                          y0 = 3.5, y1 = 1.6, yref = "y"))
 ```
 
+## Visualizing With ggplot
+
+```{r}
+library(ggplot2)
+
+# basic example
+ggplot() +
+    geom_point(data=pitches, aes(x=px, y=pz, shape=type, col=pitch_type)) +
+    coord_equal() + geom_path(aes(x, y), data = mlbgameday::kzone)
+```
+
+## Including Batter Stance
+
+```{r}
+library(ggplot2)
+
+# basic example with stand.
+ggplot() +
+    geom_point(data=pitches, aes(x=px, y=pz, shape=type, col=pitch_type)) +
+    facet_grid(. ~ stand) + coord_equal() +
+    geom_path(aes(x, y), data = mlbgameday::kzone)
+```
 
 
 ![](https://raw.githubusercontent.com/keberwein/mlbgameday/master/man/figures/mlbgameday_hex.png)
