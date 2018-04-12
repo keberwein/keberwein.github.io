@@ -11,17 +11,16 @@ knitr::opts_chunk$set(cache=T, warning=F, message=F, cache.lazy=F, dpi = 180)
 options(width=120, dplyr.width = 150)
 ```
 
-## Opening Day Is On The Way
-
-Time to set up a persistent database to collect every pitch thrown in this year's baseball season.
-
-The `mlbgameday` package is designed to facilitate extract, transform and load for MLBAM “Gameday” data. The package is optimized for parallel processing of data that may be larger than memory. Learn more about the project [here](https://github.com/keberwein/mlbgameday).
-
 ## Install from CRAN
 
 `install.packages("mlbgameday")`
 
 ## Gathering Data
+
+The package is primarily a data package, and has no native plotting tools. However, there are several plotting options available by leveraging one of the R language's excellent plotting libraries.
+
+For all of the following examples, we will use The pitch data for Jake Arrieta's no-hitter, which occurred on April 21, 2016.
+
 
 ```{r}
 library(mlbgameday)
