@@ -34,21 +34,6 @@ pitches <- inner_join(gamedat$pitch, gamedat$atbat, by = c("num", "url")) %>%
     subset(pitcher_name == "Jake Arrieta")
 ```
 
-## Visualizing With Plotly
-
-```{r}
-library(plotly)
-plot_ly(pitches, x = ~px, y = ~pz, mode = 'markers', 
-        color = ~pitch_type, marker = list(size = 7, line = list(color = ~pitch_type, width = 1)),
-        text = ~paste("Pitch Type: ", pitch_type)) %>% 
-    layout(title = "Anatomy of a No-Hitter", xaxis = list(zeroline=F), yaxis = list(zeroline=F)) %>%
-    # Draw a box for the strikezone. 
-    layout(shapes = list(type = "rect", fillcolor = "blue", 
-                         line = list(color = "blue"), opacity = 0.2,
-                         x0 = -0.95, x1 = 0.95, xref = "x",
-                         y0 = 3.5, y1 = 1.6, yref = "y"))
-```
-
 ## Visualizing With ggplot
 
 ```{r}
@@ -72,6 +57,9 @@ ggplot() +
     geom_path(aes(x, y), data = mlbgameday::kzone)
 ```
 
+## Visualizing With Other Tools
+
+The R language has no shortage of visualization tools. Other examples, including Plotly, can be found in the [package vignettes](https://github.com/keberwein/mlbgameday/blob/master/vignettes/pitch_plotting.Rmd).
 
 ![](https://raw.githubusercontent.com/keberwein/mlbgameday/master/man/figures/mlbgameday_hex.png)
 
