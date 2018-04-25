@@ -3,6 +3,7 @@ layout: post
 title: "Visualizing Data with R and mlbgameday"
 categories: r
 tags: [r, baseball, mlbgameday]
+output: md_document
 ---
 
 ```{r, echo = FALSE, warning = FALSE}
